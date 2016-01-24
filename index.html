@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Craigslist Visualizer</title>
+    <link href="styles/main.css" rel="stylesheet">
+</head>
+<body>
+    <h1>Welcome to Craigslist Visualizer</h1>
+
+    <div>
+    <label for="localCL">Local Craigslist: </label>
+    <input type="text" id="localCL" value="http://vancouver.craigslist.ca/search/apa">
+    </div>
+
+    <div>
+    <label for="destination">Destination: </label>
+    <input type="text" id="destination" value="8888+University+Dr+Burnaby+BC+Canada">
+    </div>
+
+    <div>
+    <label for="maxprice">Max Price: </label>
+    <input type="text" id="maxprice" value="1500">
+    </div>
+
+    <div>
+    <label for="minprice">Min Price: </label>
+    <input type="text" id="minprice" value="500">
+    </div>
+
+    <div>
+    <label for="furnished">Furnished: </label>
+    <select id="furnished">
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  	</select>
+  	</div>
+
+  	<div>
+    <label for="pic">Picture: </label>
+    <select id="pic">
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  	</select>
+  	</div>
+
+	<div>
+	<button id="visualize">Visualize</button>
+	</div>
+
+	<script src="visualize.js"></script>
+</body>
+</html>
