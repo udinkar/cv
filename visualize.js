@@ -1,4 +1,8 @@
 (function(context){
+	var p1;
+	p1 = document.getElementById("poi1").value;
+	p1 = p1.split(' ').join('+');
+	var serverKey = "AIzaSyBRIRzB2MfLqEE_T8Njt_L8PLz5aytm0oM";
 	var createURL = function() {
 		var URL;
 		URL = document.getElementById("localCL").value;
@@ -24,10 +28,81 @@
 		return links;
 	};
 
-	document.getElementById('visualize').addEventListener('click', function() {
-		//var iframe = document.getElementsByTagName('iframe')[0];
-		//iframe.src("http://vancouver.craigslist.ca/search/apa?hasPic=1&min_price=500&max_price=1500&is_furnished=1")
+	var decodeGeoLocation = function(url) {
+		var dl = '';
+		if (url.match(/\/@/)) {
+			dl = url.match(/\/@(.*),16z$/)[1];
+		} else if (url.match(/\/\?q=loc/)) {
+			dl = url.match(/((\+[\w]+)+)/)[1].replace(/^\+/, '');
+			if (dl.length < 20) {
+				dl = '';
+			};
+		};
+		return dl;
+	};
 
+	var measureDistance = function(apt) {
+		var promise = new Promise(function(resolve, reject) {
+			var origin = decodeGeoLocation(apt.googleMapLink);
+			if(origin === '') {
+				resolve(null);
+			}
+			var request = 'https://maps.googleapis.com/maps/api/distancematrix/' + 'json?' +
+						'origins=' + origin +
+						'&destinations=' + p1+
+						'&mode=' + 'transit' +
+						'&key=' + serverKey
+
+			$.getJSON(request, function(response) {
+				if (response && response['rows'] && response['rows'][0]){
+				apt.duration = response['rows'][0]['elements'][0]['duration']['value'] / 60.0;
+				apt.location = origin;
+				resolve(apt);
+			}
+			}).fail(function() {
+				resolve(null);
+			});
+		});
+		return promise;
+	}
+
+	var processApartment = function (url) {
+	  var promise = new Promise(function(resolve, reject) {
+	    var xhr = new XMLHttpRequest();
+	    xhr.responseType = 'document';
+	    xhr.open('GET', url, true);
+	    xhr.onload = function(e) {
+	      var clPage = this.response;
+	      var apartment = {};
+	      apartment.price = $(clPage).find(".price").text().replace(/[$]/, '');
+	      apartment.googleMapLink = $(clPage).find("a:contains('google map')").attr('href');
+	      apartment.imgs = [];
+	      $(clPage).find("#thumbs a").toArray().forEach(function(image) {
+	        apartment.imgs.push($(image).attr('href'));
+	      })
+	      resolve(apartment);
+	    };
+	    xhr.send();
+	  });
+	  return promise;
+	}
+
+	var processLinks = function(apartmentList) {
+		Promise.all(apartmentList.map(processApartment))
+		.then(function(processedList){
+		  return Promise.all(processedList.map(measureDistance));
+		})
+		.then(function (list) {
+		  return list.filter(function(e) {
+		    return e !== null;
+		  })
+		})
+		.then(function(list) {
+		  console.log(JSON.stringify(list));
+		})
+	}
+
+	document.getElementById('visualize').addEventListener('click', function() {
 		var xhr = new XMLHttpRequest();
 		xhr.responseType = 'document';
 
@@ -35,6 +110,7 @@
 		xhr.onload = function(e) {
 			var clPage = this.response;
 			var links = extractLinks(clPage);
+			var aptJSON = processLinks(links);
 			debugger;
 		};
 		xhr.send();
