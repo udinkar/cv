@@ -13,7 +13,8 @@
     }
   },
   "permissions": [
-    "http://vancouver.craigslist.ca/"
+    "http://vancouver.craigslist.ca/",
+    "http://craigslist.ca/"
   ],
   "content_scripts": [{
     "js": ["jquery-2.2.1.min.js", "main.js"]
