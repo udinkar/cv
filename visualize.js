@@ -110,7 +110,6 @@
 		})
 		.then(function(list){
 		  console.log(JSON.stringify(list));
-		  return list;
 		})
 	}
 
@@ -122,8 +121,7 @@
 		xhr.onload = function(e) {
 			var clPage = this.response;
 			var links = extractLinks(clPage);
-			var aptJSON = processLinks(links);
-			debugger;
+			processLinks(links); // Promise
 		};
 		xhr.send();
 	});
