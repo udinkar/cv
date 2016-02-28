@@ -24,6 +24,7 @@
 		xhr.open('GET', createURL(), true);
 		xhr.onload = function(e) {
 			var clPage = this.response;
+			var content = clPage.documentElement.getElementsByClassName("content")[0];
 			debugger;
 		};
 		xhr.send();

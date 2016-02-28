@@ -9,10 +9,13 @@
   },
   "app": {
     "background": {
-      "scripts": ["main.js"]
+      "scripts": ["jquery-2.2.1.min.js", "main.js"]
     }
   },
   "permissions": [
     "http://vancouver.craigslist.ca/"
-  ]
+  ],
+  "content_scripts": [{
+    "js": ["jquery-2.2.1.min.js", "main.js"]
+  }]
 }
