@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CV</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- main css file -->
+    <link rel="stylesheet" href="stylesheets/index.css">
+  </head>
+  <body>
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <!-- scatter plot -->
+          <div class="row" id="scatter-plot"></div>
+          <hr>
+          <!-- apartment images -->
+          <div class="row" id="thumbs">
+            
+            <div id="aptCarousel" class="carousel slide">
+              
+              <!-- Indicators -->
+              <ol class="carousel-indicators">
+                <li data-target="#aptCarousel" data-slide-to="0" class="active"></li>
+              </ol>
+              
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                  <!--
+                  <img src="images/miku1.jpg" alt="Something's missing">
+                  -->
+                </div>
+              </div>
+              
+              <!-- Left and right controls -->
+              <a class="left carousel-control" href="#aptCarousel" role="button" data-slide="prev">
+                <span class="icon-prev" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="right carousel-control" href="#aptCarousel" role="button" data-slide="next">
+                <span class="icon-next" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+              
+            </div>
+            
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <!-- google map -->
+          <div id="map"></div>            
+        </div>
+      </div>
+    </div>
+    
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <!-- D3JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.12/d3.js"></script>
+    <!-- RxJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.0.7/rx.all.js"></script>
+    <!-- google map helper -->
+    <script src="helpers/map.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaz3JwdnPbfHopFxQAoqHp4ANBH4fOgfM&callback=initialize" async defer></script>
+    <!-- addImages helper -->
+    <script src="helpers/addImages.js"></script>
+    <!-- open in a new tab helper -->
+    <script src="helpers/openInANewTab.js"></script>
+    <!-- scatter plot -->
+    <script src="scatter-plot.js"></script>
+  </body>
+</html>
