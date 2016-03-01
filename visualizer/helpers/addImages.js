@@ -15,7 +15,7 @@ function addImages(d){
       .append("div")
       .attr("class", "item")
       .classed("active", function(d, i){ return i==0 })
-    .append("img")
+    .append("webview")
       .attr("src", function(d){ return d })
       .attr("alt", "Not availible");
 

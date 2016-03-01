@@ -7,17 +7,24 @@
     "16": "icon_16.png",
     "128": "icon_128.png"
   },
+  "browser_action" : {
+    "default_title" : "CV"
+  },
   "app": {
     "background": {
-      "scripts": ["jquery-2.2.1.min.js", "main.js"]
+      "scripts": ["main.js"]
     }
   },
   "permissions": [
+    "webview",
+    "tabs",
+    "storage",
     "http://vancouver.craigslist.ca/",
     "http://craigslist.ca/",
-    "https://maps.googleapis.com/"
+    "https://maps.googleapis.com/",
+    "http://images.craigslist.org/"
   ],
-  "content_scripts": [{
-    "js": ["jquery-2.2.1.min.js", "main.js"]
+  "content_scripts" : [{
+    "js" : ["main.js"]
   }]
 }

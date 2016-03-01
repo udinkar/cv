@@ -42,9 +42,9 @@
 		return dl;
 	};
 
-	var measureDistance = function(apt) {
+	var measureDistance = function(unit) {
 		var promise = new Promise(function(resolve, reject) {
-			var origin = decodeGeoLocation(apt.googleMapLink);
+			var origin = decodeGeoLocation(unit.googleMapLink);
 			if(origin === '') {
 				resolve(null);
 			}
@@ -56,9 +56,9 @@
 
 			$.getJSON(request, function(response) {
 				try {
-					apt.duration = response['rows'][0]['elements'][0]['duration']['value'] / 60.0;
-					apt.location = origin;
-					resolve(apt);
+					unit.duration = response['rows'][0]['elements'][0]['duration']['value'] / 60.0;
+					unit.location = origin;
+					resolve(unit);
 				}
 				catch(ignore) {
 					resolve(null);
@@ -68,24 +68,24 @@
 			});
 		});
 		return promise;
-	}
+	};
 
-	var processApartment = function (url) {
+	var processunit = function (url) {
 	  var promise = new Promise(function(resolve, reject) {
 	    var xhr = new XMLHttpRequest();
 	    xhr.responseType = 'document';
 	    xhr.open('GET', url, true);
 	    xhr.onload = function(e) {
 	      var clPage = this.response;
-	      var apartment = {};
-	      apartment.price = $(clPage).find(".price").text().replace(/[$]/, '');
-	      apartment.googleMapLink = $(clPage).find("a:contains('google map')").attr('href');
-	      apartment.imgs = [];
+	      var unit = {};
+	      unit.price = $(clPage).find(".price").text().replace(/[$]/, '');
+	      unit.googleMapLink = $(clPage).find("a:contains('google map')").attr('href');
+	      unit.imgs = [];
 	      $(clPage).find("#thumbs a").toArray().forEach(function(image) {
-	        apartment.imgs.push($(image).attr('href'));
+	        unit.imgs.push($(image).attr('href'));
 	      })
-	      if (apartment.price && apartment.googleMapLink) {
-	      	resolve(apartment);
+	      if (unit.price && unit.googleMapLink) {
+			resolve(unit);
 	      }
 	      else {
 	      	resolve(null);
@@ -94,10 +94,19 @@
 	    xhr.send();
 	  });
 	  return promise;
-	}
+	};
 
-	var processLinks = function(apartmentList) {
-		Promise.all(apartmentList.map(processApartment))
+	// var saveToJSON = function(list) {
+	// 	if (!list) {
+ //          return;
+ //        }
+ //        chrome.storage.sync.set({'data': list}, function() {
+ //          console.log('data saved');
+ //        });
+	// };
+
+	var processLinks = function(unitList) {
+		Promise.all(unitList.map(processunit))
 		.then(function(processedList){
 		  return Promise.all(processedList.filter(function(e){
 		  	return e !== null;
@@ -110,8 +119,10 @@
 		})
 		.then(function(list){
 		  console.log(JSON.stringify(list));
+		  //saveToJSON(list);
+		  //window.open('visualizer/index.html');
 		})
-	}
+	};
 
 	document.getElementById('visualize').addEventListener('click', function() {
 		var xhr = new XMLHttpRequest();
@@ -121,7 +132,7 @@
 		xhr.onload = function(e) {
 			var clPage = this.response;
 			var links = extractLinks(clPage);
-			processLinks(links); // Promise
+			//processLinks(links); // Promise
 		};
 		xhr.send();
 	});
