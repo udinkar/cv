@@ -96,15 +96,6 @@
 	  return promise;
 	};
 
-	// var saveToJSON = function(list) {
-	// 	if (!list) {
- //          return;
- //        }
- //        chrome.storage.sync.set({'data': list}, function() {
- //          console.log('data saved');
- //        });
-	// };
-
 	var processLinks = function(unitList) {
 		Promise.all(unitList.map(processunit))
 		.then(function(processedList){
@@ -119,8 +110,7 @@
 		})
 		.then(function(list){
 		  console.log(JSON.stringify(list));
-		  //saveToJSON(list);
-		  //window.open('visualizer/index.html');
+		  //sendJSONToBG(list);
 		})
 	};
 

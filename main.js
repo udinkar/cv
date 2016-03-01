@@ -8,4 +8,6 @@ chrome.app.runtime.onLaunched.addListener(function() {
       'height': height
     }
   });
+
+  //window.open('visualizer/index.html', '_newtab');
 });
